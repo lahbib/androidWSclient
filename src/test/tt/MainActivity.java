@@ -10,9 +10,9 @@ import org.ksoap2.transport.HttpTransportSE;
 public class MainActivity extends Activity {
     /** Called when the activity is first created. */
  private final String NAMESPACE = "http://hiber/";
- private final String URL = "http://192.168.1.99:8080/WebServAndr1/testwwwsss?wsdl";
- private final String SOAP_ACTION = "http://hiber/hello";
- private final String METHOD_NAME = "hello";
+ private final String URL = "http://192.168.2.77:8080/WebServAndr1/clientAuthentWS?wsdl";
+ private final String SOAP_ACTION = "http://hiber/clientauthent";
+ private final String METHOD_NAME = "clientauthent";
  
     TextView tv;
     @Override
@@ -23,6 +23,9 @@ public class MainActivity extends Activity {
 
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);           
 
+     request.addProperty("loginclient", "client1");  
+    request.addProperty("pwdclient", "client1pwd");       
+        
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.dotNet=false;
         envelope.setOutputSoapObject(request);
@@ -33,6 +36,7 @@ public class MainActivity extends Activity {
         try{
             ht.call(SOAP_ACTION, envelope);
             //tv.setText("http set");
+            
             SoapPrimitive sp= (SoapPrimitive) envelope.getResponse();
             tv.setText("Msg from service: "+sp);
 
